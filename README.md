@@ -12,3 +12,7 @@ This password strength checker is a command-line tool written in Python. It allo
 - Minimum length of 8 characters
 
 The password is then assigned a strength score based on how many of these criteria it meets. If the password does not meet the minimum criteria, the tool suggests a strong password for the user.
+
+## Usage
+
+`python3 checker_generator.py`
