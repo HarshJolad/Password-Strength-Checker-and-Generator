@@ -1,4 +1,6 @@
 import re
+import random
+import string
 
 def strong_pwd(password):
     # Define the criteria for a strong password using regular expressions
@@ -23,12 +25,21 @@ def strong_pwd(password):
 
     return strength_score >= 5
 
+def generate_strong_pwd():
+    # Generate a random strong password of 12 characters
+    length = 12
+    characters = string.ascii_letters + string.digits 
+    strong_password = ''.join(random.choice(characters) for _ in range(length))
+    return strong_password
+
 def main():
     password = input("Enter your password: ")
     if strong_pwd(password):
         print("Strong password! Good job!")
     else:
         print("Weak password. Choose a stronger one.")
+        suggestion = generate_strong_pwd()
+        print(f"Suggested strong password: {suggestion}")
 
 if __name__ == "__main__":
     main()
