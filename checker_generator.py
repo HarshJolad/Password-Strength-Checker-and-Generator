@@ -2,43 +2,37 @@ import re
 import random
 import string
 
-def strong_pwd(password):
-    # Define the criteria for a strong password using regular expressions
-    lowercase = re.compile(r'[a-z]')
-    uppercase = re.compile(r'[A-Z]')
-    digit = re.compile(r'\d')
-    special_char = re.compile(r'[!@#$%^&*()_+{}\[\]:;<>,.?~`]')
-    eight_chars = re.compile(r'^.{8,}$')
+min_password_length = 8
+required_strength_score = 5
 
-    # Check each criteria and assign a score for each fulfilled condition
-    strength_score = 0
-    if lowercase.search(password):
-        strength_score += 1
-    if uppercase.search(password):
-        strength_score += 1
-    if digit.search(password):
-        strength_score += 1
-    if special_char.search(password):
-        strength_score += 1
-    if eight_chars.search(password):
-        strength_score += 1
+def contains_uppercase(password):
+    return re.search(r"[A-Z]", password) is not None
 
-    return strength_score >= 5
+def contains_lowercase(password):
+    return re.search(r"[a-z]", password) is not None
 
-def generate_strong_pwd():
-    # Generate a random strong password of 12 characters
-    length = 12
-    characters = string.ascii_letters + string.digits 
-    strong_password = ''.join(random.choice(characters) for _ in range(length))
-    return strong_password
+def contains_special_char(password):
+    return re.search(r"[!@#$%^&*()_+{}\[\]:;<>,.?~`]", password) is not None
+
+def is_eight_chars_long(password):
+    return len(password) >= min_password_length
+
+def is_strong_password(password):
+    criteria = [contains_uppercase, contains_lowercase, contains_special_char, is_eight_chars_long]
+    strength_score = sum(criteria_func(password) for criteria_func in criteria)
+    return strength_score >= required_strength_score
+
+def generate_strong_pwd(length:int):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choice(characters) for _ in range(length))
 
 def main():
     password = input("Enter your password: ")
-    if strong_pwd(password):
+    if is_strong_password(password):
         print("Strong password! Good job!")
     else:
         print("Weak password. Choose a stronger one.")
-        suggestion = generate_strong_pwd()
+        suggestion = generate_strong_pwd(12)
         print(f"Suggested strong password: {suggestion}")
 
 if __name__ == "__main__":
