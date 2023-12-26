@@ -16,6 +16,8 @@ The password is then assigned a strength score based on how many of these criter
 ## Usage
 
 1. Run the password strength checker by executing the following command:  
-`python3 checker_generator.py`
+```
+python3 checker_generator.py
+```
 2. Enter the password you want to check when prompted.
 3. The tool will display the password's strength score and provide appropriate feedback, indicating whether it is strong or weak. If the password is weak, a strong password suggestion will be given.
